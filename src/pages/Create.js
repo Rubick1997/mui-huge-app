@@ -1,23 +1,41 @@
-import React from "react";
-import { Typography, Button, Container, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+	Typography,
+	TextField,
+	Button,
+	Container,
+	makeStyles,
+} from "@material-ui/core";
 import { AcUnitOutlined, Send, KeyboardArrowRight } from "@material-ui/icons";
 
 const useStyles = makeStyles({
-	btn: {
-		fontSize: 60,
-		backgroundColor: "violet",
-		"&:hover": {
-			backgroundColor: "blue",
-		},
-	},
-	title: {
-		textDecoration: "underline",
+	field: {
+		marginTop: 20,
 		marginBottom: 20,
+		display: "block",
 	},
 });
 
 export default function Create() {
 	const classes = useStyles();
+
+	const [title, setTitle] = useState("");
+	const [details, setDetails] = useState("");
+	const [titleError, setTitleError] = useState(false);
+	const [detailsError, setDetailsError] = useState(false);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setDetailsError(false);
+		setTitleError(false);
+    
+		!title && setTitleError(true);
+		!details && setDetailsError(true);
+
+		if (title && details) {
+			console.log(title, details);
+		}
+	};
 
 	return (
 		<Container>
@@ -30,15 +48,41 @@ export default function Create() {
 				Create a New Note
 			</Typography>
 
-			<Button
-				className={classes.btn}
-				type='submit'
-				color='secondary'
-				variant='contained'
-				disableElevation
-				endIcon={<KeyboardArrowRight />}>
-				Submit
-			</Button>
+			<form noValidate autoComplete='off' onSubmit={handleSubmit}>
+				<TextField
+					onChange={(e) => {
+						setTitle(e.target.value);
+					}}
+					className={classes.field}
+					label='Note Title'
+					variant='outlined'
+					color='secondary'
+					fullWidth
+					required
+					error={titleError}
+				/>
+				<TextField
+					onChange={(e) => {
+						setDetails(e.target.value);
+					}}
+					className={classes.field}
+					label='Details'
+					variant='outlined'
+					color='secondary'
+					multiline
+					rows={4}
+					fullWidth
+					required
+					error={detailsError}
+				/>
+				<Button
+					type='submit'
+					color='secondary'
+					variant='contained'
+					endIcon={<KeyboardArrowRight />}>
+					Submit
+				</Button>
+			</form>
 			{/* <br />
 			<AcUnitOutlined />
 			<AcUnitOutlined color='secondary' fontSize='large' />
