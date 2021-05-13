@@ -25,22 +25,22 @@
       "id": 4
     },
     {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
       "title": "Custom Hook was made",
       "details": "it was done",
       "category": "work",
       "id": 9
+    },
+    {
+      "title": "new Note",
+      "details": "hey",
+      "category": "todos",
+      "id": 10
+    },
+    {
+      "title": "qweqwe",
+      "details": "qweqwe",
+      "category": "todos",
+      "id": 11
     }
   ]
 }

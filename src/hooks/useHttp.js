@@ -1,11 +1,11 @@
-import React, { useState} from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 
 const useHttp = (request, title, details, category) => {
 	const [notes, setNotes] = useState([]);
 	const history = useHistory();
 	let sendRequest;
-	if (request) {
+	if (request === "POST") {
 		sendRequest = () => {
 			fetch("http://localhost:8000/notes", {
 				method: request,
@@ -15,12 +15,13 @@ const useHttp = (request, title, details, category) => {
 				history.push("/");
 			});
 		};
-		
 	} else {
-		sendRequest = () => {fetch("http://localhost:8000/notes")
-			.then((response) => response.json())
-			.then((data) => setNotes(data));}
+		sendRequest = () => {
+			fetch("http://localhost:8000/notes")
+				.then((response) => response.json())
+				.then((data) => setNotes(data));
+		};
 	}
-    return {sendRequest,notes};
-}
+	return { sendRequest, notes };
+};
 export default useHttp;
