@@ -5,6 +5,7 @@ const useHttp = (request, title, details, category) => {
 	const [notes, setNotes] = useState([]);
 	const history = useHistory();
 	let sendRequest;
+	let deleteHandler;
 	if (request === "POST") {
 		sendRequest = () => {
 			fetch("http://localhost:8000/notes", {
@@ -15,6 +16,14 @@ const useHttp = (request, title, details, category) => {
 				history.push("/");
 			});
 		};
+	} else if (request === "DELETE") {
+		deleteHandler = async (id) => {
+			await fetch("http://localhost:8000/notes/" + id, {
+				method: request,
+			});
+			const newNotes = notes.filter((note) => note.id !== id);
+			setNotes(newNotes);
+		};
 	} else {
 		sendRequest = () => {
 			fetch("http://localhost:8000/notes")
@@ -22,6 +31,6 @@ const useHttp = (request, title, details, category) => {
 				.then((data) => setNotes(data));
 		};
 	}
-	return { sendRequest, notes };
+	return { sendRequest, notes, deleteHandler };
 };
 export default useHttp;
