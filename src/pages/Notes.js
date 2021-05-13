@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
+import useHttp from "../hooks/useHttp"
 
 export default function Notes() {
-	const [notes, setNotes] = useState([]);
+const {sendRequest,notes} = useHttp()
 
 	useEffect(() => {
-		fetch("http://localhost:8000/notes")
-			.then((response) => response.json())
-			.then((data) => setNotes(data));
+    sendRequest()
 	},[]);
 
 	return (<div>

@@ -13,7 +13,7 @@ import {
 	makeStyles,
 } from "@material-ui/core";
 import { KeyboardArrowRight } from "@material-ui/icons";
-import { useHistory } from "react-router";
+import useHttp from "../hooks/useHttp";
 
 const useStyles = makeStyles({
 	field: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 export default function Create() {
 	const classes = useStyles();
-	const history = useHistory();
 	const {
 		title,
 		setTitle,
@@ -38,6 +37,8 @@ export default function Create() {
 		category,
 		setCategory,
 	} = useContext(NotesContext);
+	
+	const { sendRequest } = useHttp("POST", title, details, category);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -48,13 +49,7 @@ export default function Create() {
 		!details && setDetailsError(true);
 
 		if (title && details) {
-			fetch(" http://localhost:8000/notes", {
-				method: "POST",
-				headers: { "Content-type": "application/json" },
-				body: JSON.stringify({ title, details, category }),
-			}).then(() => {
-				history.push("/");
-			});
+			sendRequest();
 		}
 	};
 

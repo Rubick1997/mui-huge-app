@@ -23,6 +23,24 @@
       "details": "Do this today",
       "category": "work",
       "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "title": "Custom Hook was made",
+      "details": "it was done",
+      "category": "work",
+      "id": 9
     }
   ]
 }
