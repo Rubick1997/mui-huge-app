@@ -1,8 +1,10 @@
+import {useState} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Notes from "./pages/Notes";
 import Create from "./pages/Create";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
+import { NotesContext } from "./context/NotesContext";
 
 const theme = createMuiTheme({
 	palette: {
@@ -21,18 +23,38 @@ const theme = createMuiTheme({
 });
 
 function App() {
+	const [title, setTitle] = useState("");
+	const [details, setDetails] = useState("");
+	const [titleError, setTitleError] = useState(false);
+	const [detailsError, setDetailsError] = useState(false);
+	const [category, setCategory] = useState("todos");
+
 	return (
 		<ThemeProvider theme={theme}>
-			<Router>
-				<Switch>
-					<Route exact path='/'>
-						<Notes />
-					</Route>
-					<Route path='/create'>
-						<Create />
-					</Route>
-				</Switch>
-			</Router>
+			<NotesContext.Provider
+				value={{
+					title,
+					setTitle,
+					details,
+					setDetails,
+					titleError,
+					setTitleError,
+					detailsError,
+					setDetailsError,
+					category,
+					setCategory,
+				}}>
+				<Router>
+					<Switch>
+						<Route exact path='/'>
+							<Notes />
+						</Route>
+						<Route path='/create'>
+							<Create />
+						</Route>
+					</Switch>
+				</Router>
+			</NotesContext.Provider>
 		</ThemeProvider>
 	);
 }

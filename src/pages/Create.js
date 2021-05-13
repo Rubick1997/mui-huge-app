@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { NotesContext } from "../context/NotesContext";
 import {
 	Typography,
 	TextField,
@@ -11,7 +12,7 @@ import {
 	RadioGroup,
 	makeStyles,
 } from "@material-ui/core";
-import { AcUnitOutlined, Send, KeyboardArrowRight } from "@material-ui/icons";
+import { KeyboardArrowRight } from "@material-ui/icons";
 
 const useStyles = makeStyles({
 	field: {
@@ -23,12 +24,18 @@ const useStyles = makeStyles({
 
 export default function Create() {
 	const classes = useStyles();
-
-	const [title, setTitle] = useState("");
-	const [details, setDetails] = useState("");
-	const [titleError, setTitleError] = useState(false);
-	const [detailsError, setDetailsError] = useState(false);
-	const [category, setCategory] = useState("todos");
+	const {
+		title,
+		setTitle,
+		details,
+		setDetails,
+		titleError,
+		setTitleError,
+		detailsError,
+		setDetailsError,
+		category,
+		setCategory,
+	} = useContext(NotesContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -106,13 +113,6 @@ export default function Create() {
 					Submit
 				</Button>
 			</form>
-			{/* <br />
-			<AcUnitOutlined />
-			<AcUnitOutlined color='secondary' fontSize='large' />
-			<AcUnitOutlined color='secondary' fontSize='small' />
-			<AcUnitOutlined color='action' fontSize='small' />
-			<AcUnitOutlined color='error' fontSize='small' />
-			<AcUnitOutlined color='disabled' fontSize='small' /> */}
 		</Container>
 	);
 }
