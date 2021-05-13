@@ -4,6 +4,11 @@ import {
 	TextField,
 	Button,
 	Container,
+	Radio,
+	FormControlLabel,
+	FormControl,
+	FormLabel,
+	RadioGroup,
 	makeStyles,
 } from "@material-ui/core";
 import { AcUnitOutlined, Send, KeyboardArrowRight } from "@material-ui/icons";
@@ -23,12 +28,13 @@ export default function Create() {
 	const [details, setDetails] = useState("");
 	const [titleError, setTitleError] = useState(false);
 	const [detailsError, setDetailsError] = useState(false);
+	const [category, setCategory] = useState("todos");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setDetailsError(false);
 		setTitleError(false);
-    
+
 		!title && setTitleError(true);
 		!details && setDetailsError(true);
 
@@ -75,6 +81,23 @@ export default function Create() {
 					required
 					error={detailsError}
 				/>
+				<FormControl className={classes.field}>
+					<FormLabel>Note Category</FormLabel>
+					<RadioGroup
+						value={category}
+						onChange={(e) => {
+							setCategory(e.target.value);
+						}}>
+						<FormControlLabel control={<Radio />} label='Money' value='money' />
+						<FormControlLabel control={<Radio />} label='Todos' value='todos' />
+						<FormControlLabel
+							control={<Radio />}
+							label='Reminders'
+							value='reminders'
+						/>
+						<FormControlLabel control={<Radio />} label='Work' value='work' />
+					</RadioGroup>
+				</FormControl>
 				<Button
 					type='submit'
 					color='secondary'
