@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 
 const useHttp = (request, title, details, category) => {
-	const [notes, setNotes] = useState([]);
+	const [state, setState] = useState([]);
 	const history = useHistory();
 	let sendRequest;
-	let deleteHandler;
+
 	if (request === "POST") {
 		sendRequest = () => {
 			fetch("http://localhost:8000/notes", {
@@ -16,21 +16,21 @@ const useHttp = (request, title, details, category) => {
 				history.push("/");
 			});
 		};
-	} else if (request === "DELETE") {
-		deleteHandler = async (id) => {
-			await fetch("http://localhost:8000/notes/" + id, {
-				method: request,
-			});
-			const newNotes = notes.filter((note) => note.id !== id);
-			setNotes(newNotes);
-		};
 	} else {
 		sendRequest = () => {
 			fetch("http://localhost:8000/notes")
 				.then((response) => response.json())
-				.then((data) => setNotes(data));
+				.then((data) => setState(data));
 		};
 	}
-	return { sendRequest, notes, deleteHandler };
+	const deleteHandler = async (id) => {
+		await fetch("http://localhost:8000/notes/" + id, {
+			method: "DELETE",
+		});
+		const newState = state.filter((note) => note.id !== id);
+		setState(newState);
+	};
+
+	return { sendRequest, state, deleteHandler };
 };
 export default useHttp;

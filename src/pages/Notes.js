@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Container, Grid } from "@material-ui/core";
 import NoteCard from "../components/NodeCard";
+import useHttp from "../hooks/useHttp";
 
 export default function Notes() {
-	const [notes, setNotes] = useState([]);
+  const { state, deleteHandler,sendRequest } = useHttp();
 
 	useEffect(() => {
-		fetch("http://localhost:8000/notes")
-			.then((response) => response.json())
-			.then((data) => setNotes(data));
+		sendRequest();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const deleteHandler = async (id) => {
-		await fetch("http://localhost:8000/notes/" + id, {
-			method: "DELETE",
-		});
-
-		const newNotes = notes.filter((note) => note.id !== id);
-		setNotes(newNotes);
-	};
 
 	return (
 		<Container>
 			<Grid container spacing={3}>
-				{notes.map((note) => (
+				{state.map((note) => (
 					<Grid item key={note.id} xs={12} md={6} lg={4}>
 						<NoteCard note={note} handleDelete={deleteHandler} />
 					</Grid>
