@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Notes from "./pages/Notes";
 import Create from "./pages/Create";
@@ -24,27 +23,11 @@ const theme = createMuiTheme({
 });
 
 function App() {
-	const [title, setTitle] = useState("");
-	const [details, setDetails] = useState("");
-	const [titleError, setTitleError] = useState(false);
-	const [detailsError, setDetailsError] = useState(false);
-	const [category, setCategory] = useState("todos");
+
 
 	return (
 		<ThemeProvider theme={theme}>
-			<NotesContext.Provider
-				value={{
-					title,
-					setTitle,
-					details,
-					setDetails,
-					titleError,
-					setTitleError,
-					detailsError,
-					setDetailsError,
-					category,
-					setCategory,
-				}}>
+			<NotesContext.Provider>
 				<Router>
 					<Layout>
 						<Switch>

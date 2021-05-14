@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { NotesContext } from "../context/NotesContext";
+import React, { useState } from "react";
 import {
 	Typography,
 	TextField,
@@ -26,19 +25,13 @@ const useStyles = makeStyles({
 export default function Create() {
 	const classes = useStyles();
 
-	const {
-		title,
-		setTitle,
-		details,
-		setDetails,
-		titleError,
-		setTitleError,
-		detailsError,
-		setDetailsError,
-		category,
-		setCategory,
-	} = useContext(NotesContext);
+	const [title, setTitle] = useState("");
+	const [titleError, setTitleError] = useState(false);
+	const [detailsError, setDetailsError] = useState(false);
+	const [category, setCategory] = useState("todos");
+	const [details, setDetails] = useState("");
 	const { sendRequest } = useHttp("POST", title, details, category);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setDetailsError(false);
@@ -62,7 +55,6 @@ export default function Create() {
 				color='textSecondary'>
 				Create a New Note
 			</Typography>
-
 			<form noValidate autoComplete='off' onSubmit={handleSubmit}>
 				<TextField
 					onChange={(e) => {
@@ -75,7 +67,11 @@ export default function Create() {
 					fullWidth
 					required
 					error={titleError}
+					inputProps={{
+						"data-testid": "input",
+					}}
 				/>
+
 				<TextField
 					onChange={(e) => {
 						setDetails(e.target.value);
@@ -89,6 +85,9 @@ export default function Create() {
 					fullWidth
 					required
 					error={detailsError}
+					inputProps={{
+						"data-testid": "input2",
+					}}
 				/>
 				<FormControl className={classes.field}>
 					<FormLabel>Note Category</FormLabel>
@@ -108,6 +107,7 @@ export default function Create() {
 					</RadioGroup>
 				</FormControl>
 				<Button
+					data-testid="button"
 					type='submit'
 					color='secondary'
 					variant='contained'
