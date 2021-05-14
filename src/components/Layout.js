@@ -10,6 +10,7 @@ import {
 	ListItemText,
 	AppBar,
 	Toolbar,
+	Avatar,
 } from "@material-ui/core";
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@material-ui/icons";
 import Clock from "react-live-clock";
@@ -41,6 +42,12 @@ const useStyles = makeStyles((theme) => {
 			width: `calc(100% - ${drawerWidth}px)`,
 		},
 		toolbar: theme.mixins.toolbar,
+		date: {
+			flexGrow: 1,
+		},
+		avatar: {
+            marginLeft:theme.spacing(2)
+        },
 	};
 });
 
@@ -66,13 +73,18 @@ function Layout({ children }) {
 		<div className={classes.root}>
 			<AppBar className={classes.appbar} elevation={0}>
 				<Toolbar>
-					<Typography>
+					<Typography className={classes.date}>
 						<Clock
 							format={"dddd, MMMM Do YYYY, h:mm:ss a"}
 							ticking={true}
 							timezone={"US/Pacific"}
 						/>
 					</Typography>
+					<Typography>Elon</Typography>
+					<Avatar
+						src='https://www.biography.com/.image/t_share/MTc5OTk2ODUyMTMxNzM0ODcy/gettyimages-1229892983-square.jpg'
+						className={classes.avatar}
+					/>
 				</Toolbar>
 			</AppBar>
 			<Drawer
