@@ -8,9 +8,11 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
+	AppBar,
+	Toolbar,
 } from "@material-ui/core";
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@material-ui/icons";
-
+import Clock from "react-live-clock";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => {
@@ -35,6 +37,10 @@ const useStyles = makeStyles((theme) => {
 		title: {
 			padding: theme.spacing(2),
 		},
+		appbar: {
+			width: `calc(100% - ${drawerWidth}px)`,
+		},
+		toolbar: theme.mixins.toolbar,
 	};
 });
 
@@ -58,6 +64,17 @@ function Layout({ children }) {
 
 	return (
 		<div className={classes.root}>
+			<AppBar className={classes.appbar} elevation={0}>
+				<Toolbar>
+					<Typography>
+						<Clock
+							format={"dddd, MMMM Do YYYY, h:mm:ss a"}
+							ticking={true}
+							timezone={"US/Pacific"}
+						/>
+					</Typography>
+				</Toolbar>
+			</AppBar>
 			<Drawer
 				className={classes.drawer}
 				variant='permanent'
@@ -85,7 +102,10 @@ function Layout({ children }) {
 					))}
 				</List>
 			</Drawer>
-			<div className={classes.page}>{children}</div>
+			<div className={classes.page}>
+				<div className={classes.toolbar}></div>
+				{children}
+			</div>
 		</div>
 	);
 }
