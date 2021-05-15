@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => {
 			flexGrow: 1,
 		},
 		avatar: {
-            marginLeft:theme.spacing(2)
-        },
+			marginLeft: theme.spacing(2),
+		},
 	};
 });
 
@@ -100,6 +100,7 @@ function Layout({ children }) {
 				<List>
 					{noteItems.map((item) => (
 						<ListItem
+							role='list-item'
 							key={item.text}
 							button
 							onClick={() => {
